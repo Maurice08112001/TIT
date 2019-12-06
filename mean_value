@@ -1,0 +1,43 @@
+/****** Skript für SelectTopNRows-Befehl aus SSMS ******/
+exec sp_execute_external_script
+
+@language =N'R',
+
+@script =N'
+        test <- as.matrix(input_data_1);
+        mean <- mean(test,[,1]);
+        
+        #Nun speichern wir das Ergebnis in drei Variablen
+        OutputDataSet <- data.frame(mean);
+        print(OutputDataSet);
+'
+,
+
+-- Dies ist das SQl-Statement, um die Daten für die R-Prozedur abzurufen:
+@input_data_1=N'
+SELECT TOP (1000) [COUNTRY_ID]  FROM [IN18].[dbo].[PTIT_T_STATIONS_NOAA];
+'
+
+;
+
+
+
+Error:
+
+
+
+Meldung 39004, Ebene 16, Status 20, Zeile 2
+Unerwarteter "R"-Skriptfehler beim Ausführen von "sp_execute_external_script" mit HRESULT 0x80004004.
+Meldung 39019, Ebene 16, Status 2, Zeile 2
+Externer Skriptfehler: 
+Fehler in source(revoScriptConnection, encoding = "UTF-8") : 
+  revoScriptConnection:3:27: Unerwartete(s) '['
+2:         test <- as.matrix(input_data_1);
+3:         mean <- mean(test,[
+                             ^
+
+Error in execution.  Check the output for more information.
+Fehler in eval(expr, envir, enclos) : 
+  Error in execution.  Check the output for more information.
+Ruft auf: source -> withVisible -> eval -> eval -> .Call
+Ausführung angehalten
