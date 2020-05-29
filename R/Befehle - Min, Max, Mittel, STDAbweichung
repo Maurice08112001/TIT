@@ -1,3 +1,5 @@
+-- R konnte aufgrund von Zeitmangel nicht mehr umfassend implementiert werden - somit wurden entsprechende Abfragen mit SQL geschrieben.
+
 drop table if exists Ergebnis
 create table Ergebnis
 (
